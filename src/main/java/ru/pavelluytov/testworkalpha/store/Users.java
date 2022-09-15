@@ -16,8 +16,13 @@ import java.math.BigInteger;
 public class Users {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @Column(updatable = false, nullable = false)
     private BigInteger id;
+
+    @Column(nullable = false)
     private String login;
+
+    @Column(nullable = false)
     private String password;
     private String name;
     private String surname;
