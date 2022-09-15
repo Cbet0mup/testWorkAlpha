@@ -1,12 +1,8 @@
 package ru.pavelluytov.testworkalpha.DTO;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-
-import javax.persistence.Column;
-import java.math.BigInteger;
 
 @Data
 @AllArgsConstructor
@@ -14,7 +10,6 @@ import java.math.BigInteger;
 @ToString
 public class UsersDTO {
 
-    private BigInteger id;
     private String login;
     private String password;
     private String name;
