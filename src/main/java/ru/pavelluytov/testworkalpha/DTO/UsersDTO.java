@@ -1,15 +1,16 @@
 package ru.pavelluytov.testworkalpha.DTO;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
+
+import java.math.BigInteger;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
+@Builder
 public class UsersDTO {
 
+    private BigInteger id;
     private String login;
     private String password;
     private String name;

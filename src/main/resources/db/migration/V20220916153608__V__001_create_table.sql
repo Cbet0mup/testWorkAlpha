@@ -1,6 +1,7 @@
-CREATE TABLE users (
+drop table if exists users;
+CREATE TABLE  users (
 
-                       id BIGINT PRIMARY KEY,
+                       id BIGINT PRIMARY KEY auto_increment not null ,
 
                        login VARCHAR(25) UNIQUE,
 

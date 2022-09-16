@@ -1,0 +1,23 @@
+drop table users;
+CREATE TABLE users (
+
+                       id BIGINT PRIMARY KEY auto_increment not null ,
+
+                       login VARCHAR(25) UNIQUE,
+
+                       password VARCHAR(50),
+
+                       name VARCHAR(25),
+
+                       surname VARCHAR(25),
+
+                       patronymic VARCHAR(25),
+
+                       is_banned BOOLEAN DEFAULT false
+
+);
+
+insert into USERS(login, password, name, surname, patronymic, IS_BANNED) values ( 'ubersasha', 'qwerty', 'Aleksandr', 'Pushkin', 'Sergeevich', false );
+insert into USERS(login, password, name, surname, patronymic, IS_BANNED) values ( 'megablock', '123456', 'Aleksandr', 'Block', 'Aleksandrovich', false );
+insert into USERS(login, password, name, surname, patronymic, IS_BANNED) values ( 'admin', 'P#utiN973$#', 'Vladimir', 'Putin', 'Vladimirovich', false );
+insert into USERS(login, password, name, surname, patronymic, IS_BANNED) values ( 'greenGorilla', '0987', 'Vladimir', 'Zelensky', 'Aleksandrovich', true );
