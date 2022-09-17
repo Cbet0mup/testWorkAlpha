@@ -1,11 +1,13 @@
 package ru.pavelluytov.testworkalpha.store;
-
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
-import ru.pavelluytov.testworkalpha.DTO.UsersDTO;
 
+import java.math.BigInteger;
 import java.util.List;
 
 @Repository
-public interface UsersJDBCRepo {
-    List<UsersDTO> getAllUsers();
+public interface UsersJDBCRepo{
+    @Query(value = "select * from USERS",nativeQuery = true)
+    List<Users> findAll();
+
 }
