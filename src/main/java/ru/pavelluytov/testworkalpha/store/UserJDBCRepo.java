@@ -36,7 +36,7 @@ public class UserJDBCRepo {
 
     public List<UsersDTO> findAllUsers() {
         String sql = "select * from users order by id";
-        UserDTOMapper mapper = new UserDTOMapper();
+       // UserDTOMapper mapper = new UserDTOMapper();
         try {
             System.out.println("find all !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 

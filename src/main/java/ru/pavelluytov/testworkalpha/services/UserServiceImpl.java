@@ -29,7 +29,7 @@ public class UserServiceImpl implements UserServiceJPA{
     public List<UsersDTO> getAllUsers(Environment env) {
         if (Objects.equals(env.getProperty("SELECTED_REPO"), "JPA")){
             List<UsersDTO> usersDTOList = new ArrayList<>();
-            Sort allUsersSort = Sort.by(Sort.Direction.ASC, "surname");        //отсортируем))
+            Sort allUsersSort = Sort.by(Sort.Direction.ASC, "id");        //отсортируем))
 
             try {
                 List<User> userList = userJpaRepo.findAll(allUsersSort);

@@ -16,8 +16,7 @@ import java.math.BigInteger;
 @Table(name = "users")
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(updatable = false, nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private BigInteger id;
 
     @Column(nullable = false)
