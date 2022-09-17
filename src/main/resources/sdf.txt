@@ -1,5 +1,5 @@
-drop table users;
-CREATE TABLE users (
+drop table user;
+CREATE TABLE user (
 
                        id BIGINT PRIMARY KEY auto_increment not null ,
 

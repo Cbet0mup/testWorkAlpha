@@ -2,19 +2,19 @@ package ru.pavelluytov.testworkalpha.factory;
 
 import org.springframework.stereotype.Component;
 import ru.pavelluytov.testworkalpha.DTO.UsersDTO;
-import ru.pavelluytov.testworkalpha.store.Users;
+import ru.pavelluytov.testworkalpha.store.User;
 
 @Component
 public class UserDTOFactory {
-    public UsersDTO createDTO (Users users){
+    public UsersDTO createDTO (User user){
         return UsersDTO.builder()
-                .id(users.getId())
-                .login(users.getLogin())
-                .name(users.getName())
-                .surname(users.getSurname())
-                .patronymic(users.getPatronymic())
-                .password(users.getPassword())
-                .is_banned(users.getIs_banned())
+                .id(user.getId())
+                .login(user.getLogin())
+                .name(user.getName())
+                .surname(user.getSurname())
+                .patronymic(user.getPatronymic())
+                .password(user.getPassword())
+                .is_banned(user.getIs_banned())
                 .build();
     }
 }

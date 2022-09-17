@@ -3,29 +3,32 @@ import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ru.pavelluytov.testworkalpha.DTO.UsersDTO;
-import ru.pavelluytov.testworkalpha.services.UserServiceImplJPA;
+import ru.pavelluytov.testworkalpha.services.UserServiceImpl;
+import ru.pavelluytov.testworkalpha.store.User;
 
-import java.sql.SQLException;
 import java.util.List;
 
 @RestController
 @RequestMapping(value = "/user", produces = MediaType.APPLICATION_JSON_VALUE)
 public class UserController {
     private final Environment env;
-    private final UserServiceImplJPA userServiceImplJPA;
+    private final UserServiceImpl userServiceImpl;
 
-    public UserController(UserServiceImplJPA userServiceImplJPA, Environment env) {
-       this.userServiceImplJPA = userServiceImplJPA;
+    public UserController(UserServiceImpl userServiceImpl, Environment env) {
+       this.userServiceImpl = userServiceImpl;
        this.env = env;
     }
 
+    @PostMapping("/create")
+    public ResponseEntity<Long> createUser(@RequestBody User user) {
+        return new ResponseEntity<>(userServiceImpl.createUser(user), HttpStatus.OK);
+    }
+
     @GetMapping("/getusers/all")
-    public ResponseEntity<List<UsersDTO>> getAllUsers() throws SQLException {
-        return new ResponseEntity<>(userServiceImplJPA.getAllUsers(), HttpStatus.OK);
+    public ResponseEntity<List<UsersDTO>> getAllUsers(){
+        return new ResponseEntity<>(userServiceImpl.getAllUsers(this.env), HttpStatus.OK);
     }
     @GetMapping("/env")
     public Object getpass(){
