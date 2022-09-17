@@ -7,6 +7,8 @@ import ru.pavelluytov.testworkalpha.factory.UserDTOFactory;
 import ru.pavelluytov.testworkalpha.store.User;
 import ru.pavelluytov.testworkalpha.store.UserJDBCRepo;
 import ru.pavelluytov.testworkalpha.store.UserJpaRepo;
+
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -22,7 +24,7 @@ public class UserServiceImpl implements UserServiceJPA{
         this.factory = factory;
         this.jdbcRepo = jdbcRepo;
     }
-                                                                                        //getAll
+    //*****************************************************************************************//getAll
     @Override
     public List<UsersDTO> getAllUsers(Environment env) {
         if (Objects.equals(env.getProperty("SELECTED_REPO"), "JPA")){
@@ -36,34 +38,37 @@ public class UserServiceImpl implements UserServiceJPA{
             catch (Exception e){
                 e.printStackTrace();
             }
+
             System.out.println("JPA!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+
             return usersDTOList;
         }
             else if (Objects.equals(env.getProperty("SELECTED_REPO"), "JDBC")){
 
             System.out.println("JDBC!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-            //return jdbcTemplate.query("select * from Person", this::mapRow);
-            return new ArrayList<>();
+
+            return this.jdbcRepo.findAllUsers();
         }
         System.out.println("ХУЙ!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
             return new ArrayList<>();
     }
-                                                                                          // create
-    public Integer createUser(UsersDTO user){
-        System.out.println("CREATE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                  //***********************     *************************************************    // create
+    public Integer createUser(User user, Environment env){
 
-        return this.jdbcRepo.createUser(user);
+        if (Objects.equals(env.getProperty("SELECTED_REPO"), "JPA")){
+            try {
+                userJpaRepo.save(user);
+                return 1;
+            } catch (Exception e) {
+                e.printStackTrace();
+                return 0;
+            }
+        } else if (Objects.equals(env.getProperty("SELECTED_REPO"), "JDBC")) {
+            return this.jdbcRepo.createUser(user);
+        }
+           else return 0;
     }
 
-//    public UsersDTO mapRow(ResultSet rs) throws SQLException {
-//        UsersDTO usersDTO = new UsersDTO();
-//        usersDTO.setId(BigInteger.valueOf(rs.getInt("id")));
-//        usersDTO.setName(rs.getString("name"));
-//        usersDTO.setLogin(rs.getString("login"));
-//        usersDTO.setPassword("password");
-//        usersDTO.setSurname(rs.getString("surname"));
-//        usersDTO.setPatronymic(rs.getString("patronymic"));
-//        usersDTO.setIs_banned(rs.getBoolean("is_banned"));
-//        return usersDTO;
-//    }
+            //************************************************************************************* // Update User
+
 }

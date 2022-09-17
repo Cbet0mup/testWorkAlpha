@@ -22,17 +22,13 @@ public class UserController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<Integer> createUser(@RequestBody UsersDTO user) {
-        return new ResponseEntity<>(userServiceImpl.createUser(user), HttpStatus.OK);
+    public ResponseEntity<Integer> createUser(@RequestBody User user) {
+        return new ResponseEntity<>(userServiceImpl.createUser(user, this.env), HttpStatus.OK);
     }
 
     @GetMapping("/getusers/all")
     public ResponseEntity<List<UsersDTO>> getAllUsers(){
         return new ResponseEntity<>(userServiceImpl.getAllUsers(this.env), HttpStatus.OK);
     }
-    @GetMapping("/env")
-    public Object getpass(){
 
-        return this.env.getProperty("SELECTED_REPO");
-    }
 }
