@@ -49,7 +49,7 @@ public class UserServiceImpl implements UserServiceJPA{
             return new ArrayList<>();
     }
                                                                                           // create
-    public Long createUser(User user){
+    public Integer createUser(UsersDTO user){
         System.out.println("CREATE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 
         return this.jdbcRepo.createUser(user);

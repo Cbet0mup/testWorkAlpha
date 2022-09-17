@@ -22,7 +22,7 @@ public class UserController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<Long> createUser(@RequestBody User user) {
+    public ResponseEntity<Integer> createUser(@RequestBody UsersDTO user) {
         return new ResponseEntity<>(userServiceImpl.createUser(user), HttpStatus.OK);
     }
 
