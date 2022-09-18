@@ -31,4 +31,9 @@ public class UserController {
         return new ResponseEntity<>(userServiceImpl.getAllUsers(this.env), HttpStatus.OK);
     }
 
+    @PutMapping("/update")
+    public ResponseEntity<Integer> updateUser(@RequestBody User user) {
+        return new ResponseEntity<>(userServiceImpl.updateUser(user, this.env), HttpStatus.OK);
+    }
+
 }

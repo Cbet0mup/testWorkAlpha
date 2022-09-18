@@ -57,7 +57,7 @@ public class UserServiceImpl implements UserServiceJPA{
 
         if (Objects.equals(env.getProperty("SELECTED_REPO"), "JPA")){
             try {
-                userJpaRepo.save(user);
+                userJpaRepo.saveAndFlush(user);
                 return 1;
             } catch (Exception e) {
                 e.printStackTrace();
@@ -71,4 +71,23 @@ public class UserServiceImpl implements UserServiceJPA{
 
             //************************************************************************************* // Update User
 
+    public Integer updateUser(User user, Environment env) {
+        if (Objects.equals(env.getProperty("SELECTED_REPO"), "JPA")){
+            try {
+                if (userJpaRepo.findById(user.getId()).isPresent()){
+                    userJpaRepo.saveAndFlush(user);
+                    return 1;
+                }   else {
+                    throw new IndexOutOfBoundsException();
+                }
+            }   catch (Exception e) {
+                e.printStackTrace();
+                return 0;
+            }
+        }   else if (Objects.equals(env.getProperty("SELECTED_REPO"), "JDBC")) {
+            return 0;
+        }
+        else return 0;
+
+    }
 }
