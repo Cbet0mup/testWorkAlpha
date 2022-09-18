@@ -40,4 +40,9 @@ public class UserController {
         return new ResponseEntity<>(userServiceImpl.BanById(id), HttpStatus.OK);
     }
 
+    @GetMapping("/getusers/allnobanned")
+    public ResponseEntity<List<UsersDTO>> getAllNoBannedUsers(){
+        return new ResponseEntity<>(userServiceImpl.findAllNoBanned(), HttpStatus.OK);
+    }
+
 }

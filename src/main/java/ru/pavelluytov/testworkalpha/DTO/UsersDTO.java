@@ -16,5 +16,5 @@ public class UsersDTO {
     private String name;
     private String surname;
     private String patronymic;
-    private Boolean is_banned;
+    private Boolean banned;
 }

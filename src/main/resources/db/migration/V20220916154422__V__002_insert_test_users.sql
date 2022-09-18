@@ -1,4 +1,4 @@
-insert into USERS(login, password, name, surname, patronymic, IS_BANNED) values ( 'ubersasha', 'qwerty', 'Aleksandr', 'Pushkin', 'Sergeevich', false );
-insert into USERS(login, password, name, surname, patronymic, IS_BANNED) values ( 'megablock', '123456', 'Aleksandr', 'Block', 'Aleksandrovich', false );
-insert into USERS(login, password, name, surname, patronymic, IS_BANNED) values ( 'admin', 'P#utiN973$#', 'Vladimir', 'Putin', 'Vladimirovich', false );
-insert into USERS(login, password, name, surname, patronymic, IS_BANNED) values ( 'greenGorilla', '0987', 'Vladimir', 'Zelensky', 'Aleksandrovich', true );
+insert into USERS(login, password, name, surname, patronymic, BANNED) values ( 'ubersasha', 'qwerty', 'Aleksandr', 'Pushkin', 'Sergeevich', false );
+insert into USERS(login, password, name, surname, patronymic, BANNED) values ( 'megablock', '123456', 'Aleksandr', 'Block', 'Aleksandrovich', false );
+insert into USERS(login, password, name, surname, patronymic, BANNED) values ( 'admin', 'P#utiN973$#', 'Vladimir', 'Putin', 'Vladimirovich', false );
+insert into USERS(login, password, name, surname, patronymic, BANNED) values ( 'greenGorilla', '0987', 'Vladimir', 'Zelensky', 'Aleksandrovich', true );

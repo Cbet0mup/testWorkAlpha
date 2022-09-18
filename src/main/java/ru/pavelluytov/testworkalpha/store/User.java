@@ -27,5 +27,5 @@ public class User {
     private String name;
     private String surname;
     private String patronymic;
-    private Boolean is_banned;
+    private Boolean banned;
 }

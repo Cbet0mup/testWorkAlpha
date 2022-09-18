@@ -22,7 +22,7 @@ public class UserJDBCRepo {
         try {
                 return jdbcTemplate.update(sql,user.getLogin(),
                         user.getPassword(), user.getName(), user.getSurname(),
-                        user.getPatronymic(), user.getIs_banned());//..execute(sql, parameterSource);
+                        user.getPatronymic(), user.getBanned());//..execute(sql, parameterSource);
 
         } catch (EmptyResultDataAccessException e){
             System.out.println("CATCH!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");

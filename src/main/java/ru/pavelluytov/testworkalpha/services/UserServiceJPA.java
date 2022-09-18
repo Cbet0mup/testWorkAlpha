@@ -11,4 +11,5 @@ public interface UserServiceJPA {
     Integer createUser(User user);
     Integer updateUser(User user);
     Integer BanById(BigInteger id);
+    List<UsersDTO> findAllNoBanned();
 }

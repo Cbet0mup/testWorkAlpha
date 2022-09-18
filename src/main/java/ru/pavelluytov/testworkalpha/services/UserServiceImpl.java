@@ -30,9 +30,11 @@ public class UserServiceImpl implements UserServiceJPA{
     }
 
     //*******************************************************************************************// choice DBRepo
+
     private Boolean choiceDbRepo(){
         return Objects.equals(this.env.getProperty("SELECTED_REPO"), "JPA");
     }
+
     //*****************************************************************************************//getAll
     @Override
     public List<UsersDTO> getAllUsers() {
@@ -106,7 +108,7 @@ public class UserServiceImpl implements UserServiceJPA{
                 Optional<User> getUser = userJpaRepo.findById(id);
                 if (getUser.isPresent()){
                     User user = getUser.get();
-                    user.setIs_banned(true);
+                    user.setBanned(true);
 
                     updateUser(user);
                 }
@@ -118,6 +120,32 @@ public class UserServiceImpl implements UserServiceJPA{
             return 1;
         } else {        //jdbc
             return 0;
+        }
+    }
+
+    //************************************************************************************  find all no banned users
+
+    public List<UsersDTO> findAllNoBanned() {
+        if (choiceDbRepo()){
+            List<UsersDTO> usersDTOList = new ArrayList<>();
+
+            try {
+                List<User> userList = userJpaRepo.getByBannedIsFalse();
+                userList.forEach(user -> usersDTOList.add(factory.createDTO(user)));
+            }
+            catch (Exception e){
+                e.printStackTrace();
+            }
+
+            System.out.println("JPA no banned!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+
+            return usersDTOList;
+        }
+        else {
+
+            System.out.println("JDBC no banned!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+
+            return this.jdbcRepo.findAllUsers();
         }
     }
 }
