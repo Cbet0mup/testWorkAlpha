@@ -37,7 +37,6 @@ public class UserJDBCRepo {
 
     public List<UsersDTO> findAllUsers() {
         String sql = "select * from users order by id";
-       // UserDTOMapper mapper = new UserDTOMapper();
         try {
             return jdbcTemplate.query(sql, new UserDTOMapper());
 
@@ -74,6 +73,18 @@ public class UserJDBCRepo {
         }   catch(Exception e){
             e.printStackTrace();
             return 0;
+        }
+    }
+
+    //********************************************************************************************** // findAllNoBannedUser
+
+    public List<UsersDTO> findAllNoBannedUser() {
+        String sql = "select * from users where isBanned=false order by id";
+        try {
+            return jdbcTemplate.query(sql, new UserDTOMapper());
+        }   catch (Exception e) {
+            e.printStackTrace();
+            return new ArrayList<>();
         }
     }
 }

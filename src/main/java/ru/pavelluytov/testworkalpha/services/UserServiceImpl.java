@@ -146,7 +146,7 @@ public class UserServiceImpl implements UserServiceJPA{
 
             System.out.println("JDBC no banned!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 
-            return this.jdbcRepo.findAllUsers();
+            return this.jdbcRepo.findAllNoBannedUser();
         }
     }
 }
