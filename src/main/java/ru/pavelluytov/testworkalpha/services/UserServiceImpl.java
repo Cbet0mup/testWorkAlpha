@@ -9,6 +9,7 @@ import ru.pavelluytov.testworkalpha.store.UserJDBCRepo;
 import ru.pavelluytov.testworkalpha.store.UserJpaRepo;
 
 import java.math.BigInteger;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -119,7 +120,7 @@ public class UserServiceImpl implements UserServiceJPA{
 
             return 1;
         } else {        //jdbc
-            return 0;
+            return this.jdbcRepo.banUserById(id);
         }
     }
 

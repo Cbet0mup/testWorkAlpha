@@ -4,7 +4,9 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import ru.pavelluytov.testworkalpha.DTO.UsersDTO;
 import ru.pavelluytov.testworkalpha.jdbcrowmappers.UserDTOMapper;
+import ru.pavelluytov.testworkalpha.jdbcrowmappers.UserMapper;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,7 +27,6 @@ public class UserJDBCRepo {
                         user.getPatronymic(), user.getIsBanned());
 
         } catch (EmptyResultDataAccessException e){
-            System.out.println("CATCH!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
             e.printStackTrace();
             return 0;
         }
@@ -38,8 +39,6 @@ public class UserJDBCRepo {
         String sql = "select * from users order by id";
        // UserDTOMapper mapper = new UserDTOMapper();
         try {
-            System.out.println("find all !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-
             return jdbcTemplate.query(sql, new UserDTOMapper());
 
         }   catch (Exception e){
@@ -54,11 +53,25 @@ public class UserJDBCRepo {
         String sql = "update USERS set login=?, password=?, name=?, surname=?, patronymic=?, isBanned=?" +
                 "where ID=?";
         try {
-            System.out.println("UPDATE JDBC !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
             return this.jdbcTemplate.update(sql, user.getLogin(), user.getPassword(), user.getName(),
                     user.getSurname(), user.getPatronymic(), user.getIsBanned(), user.getId());
 
         }   catch (Exception e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
+
+    //***************************************************************************************************// banUserById
+
+    public Integer banUserById(BigInteger id) {
+        String sqlFindById = "select * from USERS where ID=?";
+        try {
+            User user = jdbcTemplate.queryForObject(sqlFindById, new Object[]{id}, new UserMapper());
+            assert user != null;
+            user.setIsBanned(true);
+            return updateOneUser(user);
+        }   catch(Exception e){
             e.printStackTrace();
             return 0;
         }
