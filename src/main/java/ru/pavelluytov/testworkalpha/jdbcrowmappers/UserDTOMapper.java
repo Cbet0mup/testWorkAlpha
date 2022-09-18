@@ -16,7 +16,7 @@ public class UserDTOMapper implements RowMapper<UsersDTO> {
         usersDTO.setPassword("password");
         usersDTO.setSurname(rs.getString("surname"));
         usersDTO.setPatronymic(rs.getString("patronymic"));
-        usersDTO.setIsbanned(rs.getBoolean("is_banned"));
+        usersDTO.setIsBanned(rs.getBoolean("isBanned"));
         return usersDTO;
     }
 }

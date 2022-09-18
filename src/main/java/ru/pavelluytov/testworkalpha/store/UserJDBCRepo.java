@@ -17,12 +17,12 @@ public class UserJDBCRepo {
     }
 //***********************************************************************************************// create
     public Integer createUser(User user) {
-        String sql = "insert into USERS(login, password, name, surname, patronymic, isbanned)" +
+        String sql = "insert into USERS (login, password, name, surname, patronymic, isBanned)" +
                 "values (?, ?, ?, ?, ?, ?)";
         try {
                 return jdbcTemplate.update(sql,user.getLogin(),
                         user.getPassword(), user.getName(), user.getSurname(),
-                        user.getPatronymic(), user.getIsbanned());//..execute(sql, parameterSource);
+                        user.getPatronymic(), user.getIsBanned());
 
         } catch (EmptyResultDataAccessException e){
             System.out.println("CATCH!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
@@ -45,6 +45,22 @@ public class UserJDBCRepo {
         }   catch (Exception e){
             e.printStackTrace();
             return new ArrayList<>();
+        }
+    }
+
+    //************************************************************************************************// updateUser
+
+    public Integer updateOneUser(User user){
+        String sql = "update USERS set login=?, password=?, name=?, surname=?, patronymic=?, isBanned=?" +
+                "where ID=?";
+        try {
+            System.out.println("UPDATE JDBC !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+            return this.jdbcTemplate.update(sql, user.getLogin(), user.getPassword(), user.getName(),
+                    user.getSurname(), user.getPatronymic(), user.getIsBanned(), user.getId());
+
+        }   catch (Exception e) {
+            e.printStackTrace();
+            return 0;
         }
     }
 }
