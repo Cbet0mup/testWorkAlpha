@@ -8,32 +8,36 @@ import ru.pavelluytov.testworkalpha.DTO.UsersDTO;
 import ru.pavelluytov.testworkalpha.services.UserServiceImpl;
 import ru.pavelluytov.testworkalpha.store.User;
 
+import java.math.BigInteger;
 import java.util.List;
 
 @RestController
 @RequestMapping(value = "/user", produces = MediaType.APPLICATION_JSON_VALUE)
 public class UserController {
-    private final Environment env;
     private final UserServiceImpl userServiceImpl;
 
-    public UserController(UserServiceImpl userServiceImpl, Environment env) {
+    public UserController(UserServiceImpl userServiceImpl) {
        this.userServiceImpl = userServiceImpl;
-       this.env = env;
     }
 
     @PostMapping("/create")
     public ResponseEntity<Integer> createUser(@RequestBody User user) {
-        return new ResponseEntity<>(userServiceImpl.createUser(user, this.env), HttpStatus.OK);
+        return new ResponseEntity<>(userServiceImpl.createUser(user), HttpStatus.OK);
     }
 
     @GetMapping("/getusers/all")
     public ResponseEntity<List<UsersDTO>> getAllUsers(){
-        return new ResponseEntity<>(userServiceImpl.getAllUsers(this.env), HttpStatus.OK);
+        return new ResponseEntity<>(userServiceImpl.getAllUsers(), HttpStatus.OK);
     }
 
     @PutMapping("/update")
     public ResponseEntity<Integer> updateUser(@RequestBody User user) {
-        return new ResponseEntity<>(userServiceImpl.updateUser(user, this.env), HttpStatus.OK);
+        return new ResponseEntity<>(userServiceImpl.updateUser(user), HttpStatus.OK);
+    }
+
+    @PutMapping("/banuser")
+    public ResponseEntity<Integer> banUser(@RequestParam BigInteger id) {
+        return new ResponseEntity<>(userServiceImpl.BanById(id), HttpStatus.OK);
     }
 
 }

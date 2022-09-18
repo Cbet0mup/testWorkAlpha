@@ -12,22 +12,31 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserServiceJPA{
     private final UserJpaRepo userJpaRepo;
     private final UserDTOFactory factory;
     private final UserJDBCRepo jdbcRepo;
-    
-    public UserServiceImpl(UserJpaRepo userJpaRepo, UserDTOFactory factory, UserJDBCRepo jdbcRepo) {
+    private final Environment env;
+
+
+    public UserServiceImpl(UserJpaRepo userJpaRepo, UserDTOFactory factory, UserJDBCRepo jdbcRepo, Environment env) {
         this.userJpaRepo = userJpaRepo;
         this.factory = factory;
         this.jdbcRepo = jdbcRepo;
+        this.env = env;
+    }
+
+    //*******************************************************************************************// choice DBRepo
+    private Boolean choiceDbRepo(){
+        return Objects.equals(this.env.getProperty("SELECTED_REPO"), "JPA");
     }
     //*****************************************************************************************//getAll
     @Override
-    public List<UsersDTO> getAllUsers(Environment env) {
-        if (Objects.equals(env.getProperty("SELECTED_REPO"), "JPA")){
+    public List<UsersDTO> getAllUsers() {
+        if (choiceDbRepo()){
             List<UsersDTO> usersDTOList = new ArrayList<>();
             Sort allUsersSort = Sort.by(Sort.Direction.ASC, "id");        //отсортируем))
 
@@ -43,19 +52,18 @@ public class UserServiceImpl implements UserServiceJPA{
 
             return usersDTOList;
         }
-            else if (Objects.equals(env.getProperty("SELECTED_REPO"), "JDBC")){
+            else {
 
             System.out.println("JDBC!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 
             return this.jdbcRepo.findAllUsers();
         }
-        System.out.println("ХУЙ!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-            return new ArrayList<>();
     }
                   //***********************     *************************************************    // create
-    public Integer createUser(User user, Environment env){
+    @Override
+    public Integer createUser(User user){
 
-        if (Objects.equals(env.getProperty("SELECTED_REPO"), "JPA")){
+        if (choiceDbRepo()){
             try {
                 userJpaRepo.saveAndFlush(user);
                 return 1;
@@ -63,16 +71,16 @@ public class UserServiceImpl implements UserServiceJPA{
                 e.printStackTrace();
                 return 0;
             }
-        } else if (Objects.equals(env.getProperty("SELECTED_REPO"), "JDBC")) {
+        } else {
             return this.jdbcRepo.createUser(user);
         }
-           else return 0;
     }
 
             //************************************************************************************* // Update User
 
-    public Integer updateUser(User user, Environment env) {
-        if (Objects.equals(env.getProperty("SELECTED_REPO"), "JPA")){
+    @Override
+    public Integer updateUser(User user) {
+        if (choiceDbRepo()){
             try {
                 if (userJpaRepo.findById(user.getId()).isPresent()){
                     userJpaRepo.saveAndFlush(user);
@@ -84,10 +92,32 @@ public class UserServiceImpl implements UserServiceJPA{
                 e.printStackTrace();
                 return 0;
             }
-        }   else if (Objects.equals(env.getProperty("SELECTED_REPO"), "JDBC")) {
+        }   else {      //jdbc
             return 0;
         }
-        else return 0;
+    }
 
+    //********************************************************************************************  // Ban user by id
+
+    @Override
+    public Integer BanById(BigInteger id) {
+        if (choiceDbRepo()) {
+            try {
+                Optional<User> getUser = userJpaRepo.findById(id);
+                if (getUser.isPresent()){
+                    User user = getUser.get();
+                    user.setIs_banned(true);
+
+                    updateUser(user);
+                }
+                else return 0;
+            }   catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            return 1;
+        } else {        //jdbc
+            return 0;
+        }
     }
 }
