@@ -130,7 +130,7 @@ public class UserServiceImpl implements UserServiceJPA{
             List<UsersDTO> usersDTOList = new ArrayList<>();
 
             try {
-                List<User> userList = userJpaRepo.getByBannedIsFalse();
+                List<User> userList = userJpaRepo.getByBannedIsFalseOrderById();
                 userList.forEach(user -> usersDTOList.add(factory.createDTO(user)));
             }
             catch (Exception e){
