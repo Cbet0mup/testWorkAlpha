@@ -108,7 +108,7 @@ public class UserServiceImpl implements UserServiceJPA{
                 Optional<User> getUser = userJpaRepo.findById(id);
                 if (getUser.isPresent()){
                     User user = getUser.get();
-                    user.setBanned(true);
+                    user.setIsbanned(true);
 
                     updateUser(user);
                 }
@@ -130,7 +130,7 @@ public class UserServiceImpl implements UserServiceJPA{
             List<UsersDTO> usersDTOList = new ArrayList<>();
 
             try {
-                List<User> userList = userJpaRepo.getByBannedIsFalseOrderById();
+                List<User> userList = userJpaRepo.getByIsbannedIsFalseOrderById();
                 userList.forEach(user -> usersDTOList.add(factory.createDTO(user)));
             }
             catch (Exception e){

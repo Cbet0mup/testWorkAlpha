@@ -17,12 +17,12 @@ public class UserJDBCRepo {
     }
 //***********************************************************************************************// create
     public Integer createUser(User user) {
-        String sql = "insert into USERS(login, password, name, surname, patronymic, IS_BANNED)" +
+        String sql = "insert into USERS(login, password, name, surname, patronymic, isbanned)" +
                 "values (?, ?, ?, ?, ?, ?)";
         try {
                 return jdbcTemplate.update(sql,user.getLogin(),
                         user.getPassword(), user.getName(), user.getSurname(),
-                        user.getPatronymic(), user.getBanned());//..execute(sql, parameterSource);
+                        user.getPatronymic(), user.getIsbanned());//..execute(sql, parameterSource);
 
         } catch (EmptyResultDataAccessException e){
             System.out.println("CATCH!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
