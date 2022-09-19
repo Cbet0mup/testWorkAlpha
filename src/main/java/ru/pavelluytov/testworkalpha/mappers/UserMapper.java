@@ -1,8 +1,7 @@
-package ru.pavelluytov.testworkalpha.jdbcrowmappers;
+package ru.pavelluytov.testworkalpha.mappers;
 
 import org.springframework.jdbc.core.RowMapper;
-import ru.pavelluytov.testworkalpha.DTO.UsersDTO;
-import ru.pavelluytov.testworkalpha.store.User;
+import ru.pavelluytov.testworkalpha.entity.User;
 
 import java.math.BigInteger;
 import java.sql.ResultSet;

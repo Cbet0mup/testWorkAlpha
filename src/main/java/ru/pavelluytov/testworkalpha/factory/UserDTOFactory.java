@@ -2,7 +2,7 @@ package ru.pavelluytov.testworkalpha.factory;
 
 import org.springframework.stereotype.Component;
 import ru.pavelluytov.testworkalpha.DTO.UsersDTO;
-import ru.pavelluytov.testworkalpha.store.User;
+import ru.pavelluytov.testworkalpha.entity.User;
 
 @Component
 public class UserDTOFactory {

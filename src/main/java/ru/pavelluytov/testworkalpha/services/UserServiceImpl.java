@@ -4,9 +4,9 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import ru.pavelluytov.testworkalpha.DTO.UsersDTO;
 import ru.pavelluytov.testworkalpha.factory.UserDTOFactory;
-import ru.pavelluytov.testworkalpha.store.User;
-import ru.pavelluytov.testworkalpha.store.UserJDBCRepo;
-import ru.pavelluytov.testworkalpha.store.UserJpaRepo;
+import ru.pavelluytov.testworkalpha.entity.User;
+import ru.pavelluytov.testworkalpha.repository.UserJDBCRepo;
+import ru.pavelluytov.testworkalpha.repository.UserJpaRepo;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
@@ -57,15 +57,15 @@ public class UserServiceImpl implements UserServiceJPA{
     }
                   //***********************     *************************************************    // create
     @Override
-    public Integer createUser(User user){
+    public Boolean createUser(User user){
 
         if (choiceDbRepo()){
             try {
                 userJpaRepo.saveAndFlush(user);
-                return 1;
+                return true;
             } catch (Exception e) {
                 e.printStackTrace();
-                return 0;
+                return true;
             }
         } else {
             return this.jdbcRepo.createUser(user);
@@ -75,28 +75,29 @@ public class UserServiceImpl implements UserServiceJPA{
             //************************************************************************************* // Update User
 
     @Override
-    public Integer updateUser(User user) {
+    public Boolean updateUser(User user) {
         if (choiceDbRepo()){
             try {
                 if (userJpaRepo.findById(user.getId()).isPresent()){
                     userJpaRepo.saveAndFlush(user);
-                    return 1;
+                    return true;
                 }   else {
                     throw new IndexOutOfBoundsException();
                 }
             }   catch (Exception e) {
                 e.printStackTrace();
-                return 0;
+                return false;
             }
         }   else {      //jdbc
-            return this.jdbcRepo.updateOneUser(user);
+            this.jdbcRepo.updateOneUser(user);
+            return true;
         }
     }
 
     //********************************************************************************************  // Ban user by id
 
     @Override
-    public Integer BanById(BigInteger id) {
+    public Boolean BanById(BigInteger id) {
         if (choiceDbRepo()) {
             try {
                 Optional<User> getUser = userJpaRepo.findById(id);
@@ -106,14 +107,15 @@ public class UserServiceImpl implements UserServiceJPA{
 
                     updateUser(user);
                 }
-                else return 0;
+                    else return false;
             }   catch (Exception e) {
                 e.printStackTrace();
             }
 
-            return 1;
+            return true;
         } else {        //jdbc
-            return this.jdbcRepo.banUserById(id);
+            this.jdbcRepo.banUserById(id);
+            return true;
         }
     }
 

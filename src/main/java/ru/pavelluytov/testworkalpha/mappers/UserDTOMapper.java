@@ -1,4 +1,4 @@
-package ru.pavelluytov.testworkalpha.jdbcrowmappers;
+package ru.pavelluytov.testworkalpha.mappers;
 import org.springframework.jdbc.core.RowMapper;
 import ru.pavelluytov.testworkalpha.DTO.UsersDTO;
 

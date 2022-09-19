@@ -1,10 +1,11 @@
-package ru.pavelluytov.testworkalpha.store;
+package ru.pavelluytov.testworkalpha.repository;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import ru.pavelluytov.testworkalpha.DTO.UsersDTO;
-import ru.pavelluytov.testworkalpha.jdbcrowmappers.UserDTOMapper;
-import ru.pavelluytov.testworkalpha.jdbcrowmappers.UserMapper;
+import ru.pavelluytov.testworkalpha.entity.User;
+import ru.pavelluytov.testworkalpha.mappers.UserDTOMapper;
+import ru.pavelluytov.testworkalpha.mappers.UserMapper;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
@@ -18,17 +19,17 @@ public class UserJDBCRepo {
         this.jdbcTemplate = jdbcTemplate;
     }
 //***********************************************************************************************// create
-    public Integer createUser(User user) {
+    public Boolean createUser(User user) {
         String sql = "insert into USERS (login, password, name, surname, patronymic, banned)" +
                 "values (?, ?, ?, ?, ?, ?)";
         try {
-                return jdbcTemplate.update(sql,user.getLogin(),
+            jdbcTemplate.update(sql,user.getLogin(),
                         user.getPassword(), user.getName(), user.getSurname(),
                         user.getPatronymic(), user.getBanned());
-
+            return true;
         } catch (EmptyResultDataAccessException e){
             e.printStackTrace();
-            return 0;
+            return false;
         }
 
     }

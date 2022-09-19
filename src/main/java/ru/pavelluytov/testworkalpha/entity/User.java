@@ -1,4 +1,4 @@
-package ru.pavelluytov.testworkalpha.store;
+package ru.pavelluytov.testworkalpha.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
