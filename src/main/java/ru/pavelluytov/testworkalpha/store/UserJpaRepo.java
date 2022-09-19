@@ -6,5 +6,5 @@ import java.util.List;
 
 @Repository
 public interface UserJpaRepo extends JpaRepository<User, BigInteger> {
-    List<User> getByIsBannedIsFalseOrderById();
+    List<User> getByBannedIsFalseOrderById();
 }

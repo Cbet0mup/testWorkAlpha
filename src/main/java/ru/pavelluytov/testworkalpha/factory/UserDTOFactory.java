@@ -14,7 +14,7 @@ public class UserDTOFactory {
                 .surname(user.getSurname())
                 .patronymic(user.getPatronymic())
                 .password(user.getPassword())
-                .isBanned(user.getIsBanned())
+                .banned(user.getBanned())
                 .build();
     }
 }

@@ -19,12 +19,12 @@ public class UserJDBCRepo {
     }
 //***********************************************************************************************// create
     public Integer createUser(User user) {
-        String sql = "insert into USERS (login, password, name, surname, patronymic, isBanned)" +
+        String sql = "insert into USERS (login, password, name, surname, patronymic, banned)" +
                 "values (?, ?, ?, ?, ?, ?)";
         try {
                 return jdbcTemplate.update(sql,user.getLogin(),
                         user.getPassword(), user.getName(), user.getSurname(),
-                        user.getPatronymic(), user.getIsBanned());
+                        user.getPatronymic(), user.getBanned());
 
         } catch (EmptyResultDataAccessException e){
             e.printStackTrace();
@@ -49,11 +49,11 @@ public class UserJDBCRepo {
     //************************************************************************************************// updateUser
 
     public Integer updateOneUser(User user){
-        String sql = "update USERS set login=?, password=?, name=?, surname=?, patronymic=?, isBanned=?" +
+        String sql = "update USERS set login=?, password=?, name=?, surname=?, patronymic=?, banned=?" +
                 "where ID=?";
         try {
             return this.jdbcTemplate.update(sql, user.getLogin(), user.getPassword(), user.getName(),
-                    user.getSurname(), user.getPatronymic(), user.getIsBanned(), user.getId());
+                    user.getSurname(), user.getPatronymic(), user.getBanned(), user.getId());
 
         }   catch (Exception e) {
             e.printStackTrace();
@@ -68,7 +68,7 @@ public class UserJDBCRepo {
         try {
             User user = jdbcTemplate.queryForObject(sqlFindById, new Object[]{id}, new UserMapper());
             assert user != null;
-            user.setIsBanned(true);
+            user.setBanned(true);
             return updateOneUser(user);
         }   catch(Exception e){
             e.printStackTrace();
@@ -79,7 +79,7 @@ public class UserJDBCRepo {
     //********************************************************************************************** // findAllNoBannedUser
 
     public List<UsersDTO> findAllNoBannedUser() {
-        String sql = "select * from users where isBanned=false order by id";
+        String sql = "select * from users where banned=false order by id";
         try {
             return jdbcTemplate.query(sql, new UserDTOMapper());
         }   catch (Exception e) {

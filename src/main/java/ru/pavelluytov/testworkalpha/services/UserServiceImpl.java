@@ -9,7 +9,6 @@ import ru.pavelluytov.testworkalpha.store.UserJDBCRepo;
 import ru.pavelluytov.testworkalpha.store.UserJpaRepo;
 
 import java.math.BigInteger;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -50,15 +49,9 @@ public class UserServiceImpl implements UserServiceJPA{
             catch (Exception e){
                 e.printStackTrace();
             }
-
-            System.out.println("JPA!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-
             return usersDTOList;
         }
             else {
-
-            System.out.println("JDBC!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-
             return this.jdbcRepo.findAllUsers();
         }
     }
@@ -109,7 +102,7 @@ public class UserServiceImpl implements UserServiceJPA{
                 Optional<User> getUser = userJpaRepo.findById(id);
                 if (getUser.isPresent()){
                     User user = getUser.get();
-                    user.setIsBanned(true);
+                    user.setBanned(true);
 
                     updateUser(user);
                 }
@@ -131,21 +124,15 @@ public class UserServiceImpl implements UserServiceJPA{
             List<UsersDTO> usersDTOList = new ArrayList<>();
 
             try {
-                List<User> userList = userJpaRepo.getByIsBannedIsFalseOrderById();
+                List<User> userList = userJpaRepo.getByBannedIsFalseOrderById();
                 userList.forEach(user -> usersDTOList.add(factory.createDTO(user)));
             }
             catch (Exception e){
                 e.printStackTrace();
             }
-
-            System.out.println("JPA no banned!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-
             return usersDTOList;
         }
         else {
-
-            System.out.println("JDBC no banned!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-
             return this.jdbcRepo.findAllNoBannedUser();
         }
     }

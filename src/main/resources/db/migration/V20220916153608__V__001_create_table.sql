@@ -13,6 +13,6 @@ CREATE TABLE  users (
 
                        patronymic VARCHAR(25),
 
-                       isbanned BOOLEAN DEFAULT false
+                       banned BOOLEAN DEFAULT false
 
 );

@@ -18,7 +18,7 @@ public class UserMapper implements RowMapper<User> {
         user.setPassword("password");
         user.setSurname(rs.getString("surname"));
         user.setPatronymic(rs.getString("patronymic"));
-        user.setIsBanned(rs.getBoolean("isBanned"));
+        user.setBanned(rs.getBoolean("banned"));
         return user;
     }
 }
