@@ -2,6 +2,7 @@ package ru.pavelluytov.testworkalpha.services;
 import org.springframework.core.env.Environment;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.pavelluytov.testworkalpha.DTO.UsersDTO;
 import ru.pavelluytov.testworkalpha.factory.UserDTOFactory;
 import ru.pavelluytov.testworkalpha.entity.User;
@@ -19,23 +20,23 @@ public class UserServiceImpl implements UserServiceJPA{
     private final UserJpaRepo userJpaRepo;
     private final UserDTOFactory factory;
     private final UserJDBCRepo jdbcRepo;
-    private final Environment env;
+    private final String env = System.getProperty("SELECTED_REPO");
 
-
-    public UserServiceImpl(UserJpaRepo userJpaRepo, UserDTOFactory factory, UserJDBCRepo jdbcRepo, Environment env) {
+    public UserServiceImpl(UserJpaRepo userJpaRepo, UserDTOFactory factory, UserJDBCRepo jdbcRepo) {
         this.userJpaRepo = userJpaRepo;
         this.factory = factory;
         this.jdbcRepo = jdbcRepo;
-        this.env = env;
     }
+
 
     //*******************************************************************************************// choice DBRepo
 
     private Boolean choiceDbRepo(){
-        return Objects.equals(this.env.getProperty("SELECTED_REPO"), "JPA");
+        return Objects.equals(this.env, "JPA");
     }
 
     //*****************************************************************************************//getAll
+    @Transactional
     @Override
     public List<UsersDTO> getAllUsers() {
         if (choiceDbRepo()){
@@ -56,6 +57,7 @@ public class UserServiceImpl implements UserServiceJPA{
         }
     }
                   //***********************     *************************************************    // create
+    @Transactional
     @Override
     public Boolean createUser(User user){
 
@@ -74,6 +76,7 @@ public class UserServiceImpl implements UserServiceJPA{
 
             //************************************************************************************* // Update User
 
+    @Transactional
     @Override
     public Boolean updateUser(User user) {
         if (choiceDbRepo()){
@@ -96,6 +99,7 @@ public class UserServiceImpl implements UserServiceJPA{
 
     //********************************************************************************************  // Ban user by id
 
+    @Transactional
     @Override
     public Boolean BanById(BigInteger id) {
         if (choiceDbRepo()) {
@@ -121,6 +125,7 @@ public class UserServiceImpl implements UserServiceJPA{
 
     //************************************************************************************  find all no banned users
 
+    @Transactional(readOnly = true)
     public List<UsersDTO> findAllNoBanned() {
         if (choiceDbRepo()){
             List<UsersDTO> usersDTOList = new ArrayList<>();
