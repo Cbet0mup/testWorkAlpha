@@ -1,6 +1,7 @@
 package ru.pavelluytov.testworkalpha.services;
 
 import lombok.RequiredArgsConstructor;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestConstructor;
@@ -20,36 +21,32 @@ import static org.assertj.core.api.Assertions.assertThat;
 class UserServiceImplTest {
 
     private static final BigInteger USER_ID = BigInteger.valueOf(1);
-
     private final UserServiceImpl userService;
-
-
     private final UserJpaRepo userJpaRepo;
 
-    private final UserDTOFactory factory;
-
-
     @Test
+    @DisplayName("JPA должен получить всех прользователей")
     void getAllUsers() {
-        var usr = new UserDTOFactory().createDTO(getNewUser());
-        assertThat(userService.getAllUsers().get(0)).isEqualTo(usr);
+        assertThat(userService.getAllUsers()).isNotNull();
     }
 
-    @Test
-    void createUser() {
+    @Test@DisplayName("JPA должен создать нового пользователя")
+    void shouldCreateUser() {
         var usr = newUser();
         assertThat(userService.createUser(usr)).isTrue();
     }
 
     @Test
-    void updateUser() {
+    @DisplayName("JPA должен обновить пользователя")
+    void shouldUpdateUser() {
         var usr= getUser();
         usr.setName("testName");
         assertThat(userService.updateUser(usr)).isTrue();
     }
 
     @Test
-    void banById() {
+    @DisplayName("JPA должен банануть пользователя по id")
+    void shouldBanById() {
         var usr = getUser();
         usr.setBanned(true);
         userService.updateUser(usr);
@@ -57,15 +54,10 @@ class UserServiceImplTest {
     }
 
     @Test
-    void findAllNoBanned() {
+    @DisplayName("JPA должен найти всех не забаненных прользователей")
+    void shouldFindAllNoBanned() {
         List<UsersDTO> users = userService.findAllNoBanned();
-        users.forEach(x ->{
-            assertThat(x.getBanned()).isFalse();
-        });
-    }
-    private User getNewUser() {
-        return new User(USER_ID, "ubersasha", "password"
-                , "Aleksandr", "Pushkin", "Sergeevich", false);
+        users.forEach(x -> assertThat(x.getBanned()).isFalse());
     }
 
     private User getUser() {
