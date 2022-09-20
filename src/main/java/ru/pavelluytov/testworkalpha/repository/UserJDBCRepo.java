@@ -19,6 +19,7 @@ public class UserJDBCRepo {
         this.jdbcTemplate = jdbcTemplate;
     }
 //***********************************************************************************************// create
+
     public Boolean createUser(User user) {
         String sql = "insert into USERS (login, password, name, surname, patronymic, banned)" +
                 "values (?, ?, ?, ?, ?, ?)";
@@ -49,31 +50,32 @@ public class UserJDBCRepo {
 
     //************************************************************************************************// updateUser
 
-    public Integer updateOneUser(User user){
+    public Boolean updateOneUser(User user){
         String sql = "update USERS set login=?, password=?, name=?, surname=?, patronymic=?, banned=?" +
                 "where ID=?";
         try {
-            return this.jdbcTemplate.update(sql, user.getLogin(), user.getPassword(), user.getName(),
+            this.jdbcTemplate.update(sql, user.getLogin(), user.getPassword(), user.getName(),
                     user.getSurname(), user.getPatronymic(), user.getBanned(), user.getId());
-
+            return true;
         }   catch (Exception e) {
             e.printStackTrace();
-            return 0;
+            return false;
         }
     }
 
     //***************************************************************************************************// banUserById
 
-    public Integer banUserById(BigInteger id) {
+    public Boolean banUserById(BigInteger id) {
         String sqlFindById = "select * from USERS where ID=?";
         try {
             User user = jdbcTemplate.queryForObject(sqlFindById, new Object[]{id}, new UserMapper());
             assert user != null;
             user.setBanned(true);
-            return updateOneUser(user);
+            updateOneUser(user);
+            return true;
         }   catch(Exception e){
             e.printStackTrace();
-            return 0;
+            return false;
         }
     }
 

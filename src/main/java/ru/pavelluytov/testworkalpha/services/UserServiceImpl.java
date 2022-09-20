@@ -82,7 +82,7 @@ public class UserServiceImpl implements UserServiceJPA{
         if (choiceDbRepo()){
             try {
                 if (userJpaRepo.findById(user.getId()).isPresent()){
-                    userJpaRepo.saveAndFlush(user);
+                   userJpaRepo.saveAndFlush(user);
                     return true;
                 }   else {
                     throw new IndexOutOfBoundsException();
@@ -92,8 +92,7 @@ public class UserServiceImpl implements UserServiceJPA{
                 return false;
             }
         }   else {      //jdbc
-            this.jdbcRepo.updateOneUser(user);
-            return true;
+            return this.jdbcRepo.updateOneUser(user);
         }
     }
 
@@ -118,8 +117,7 @@ public class UserServiceImpl implements UserServiceJPA{
 
             return true;
         } else {        //jdbc
-            this.jdbcRepo.banUserById(id);
-            return true;
+            return this.jdbcRepo.banUserById(id);
         }
     }
 

@@ -27,8 +27,6 @@ class UserServiceImplTest {
 
     private final UserDTOFactory factory;
 
-    private final UserJDBCRepo jdbcRepo;
-
 
     @Test
     void getAllUsers() {
@@ -37,26 +35,29 @@ class UserServiceImplTest {
 //    @Test
 //    void createUser() {
 //    }
-//
-//    @Test
-//    void updateUser() {
-//    }
+
+    @Test
+    void updateUser() {
+        var usr = userJpaRepo.findById(USER_ID);
+        assertThat(usr.isPresent()).isTrue();
+        usr.get().setName("testName");
+        assertThat(userService.updateUser(usr.get())).isTrue();
+    }
 
     @Test
     void banById() {
-        var actualResult = userJpaRepo.findById(USER_ID);
-        assertThat(actualResult.isPresent()).isTrue();
-        User user = actualResult.get();
+        var actualResultJPA = userJpaRepo.findById(USER_ID);
+        assertThat(actualResultJPA.isPresent()).isTrue();
+        User user = actualResultJPA.get();
         user.setBanned(true);
         assertThat(user.getBanned()).isTrue();
-        //System.out.println(user.getName() + "************** name  *********************");
     }
 
 //    @Test
 //    void findAllNoBanned() {
 //    }
-    private User getNewUser() {
-        return new User(USER_ID, "testLogin", "testPasswd",
-                "testName", "tetsSurname", "testPatron", false);
-    }
+//    private User getNewUser() {
+//        return new User(USER_ID, "testLogin", "testPasswd",
+//                "testName", "tetsSurname", "testPatron", false);
+//    }
 }
