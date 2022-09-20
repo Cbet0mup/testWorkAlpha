@@ -10,6 +10,7 @@ import ru.pavelluytov.testworkalpha.repository.UserJDBCRepo;
 import ru.pavelluytov.testworkalpha.repository.UserJpaRepo;
 
 import java.math.BigInteger;
+import java.util.Collections;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -30,27 +31,30 @@ class UserServiceImplTest {
 
     @Test
     void getAllUsers() {
+        var usr = new UserDTOFactory().createDTO(new User(USER_ID, "ubersasha", "password"
+                , "Aleksandr", "Pushkin", "Sergeevich", false));
+        assertThat(userService.getAllUsers().get(0)).isEqualTo(usr);
     }
 
-//    @Test
-//    void createUser() {
-//    }
+    @Test
+    void createUser() {
+        var usr = newUser();
+        assertThat(userService.createUser(usr)).isTrue();
+    }
 
     @Test
     void updateUser() {
-        var usr = userJpaRepo.findById(USER_ID);
-        assertThat(usr.isPresent()).isTrue();
-        usr.get().setName("testName");
-        assertThat(userService.updateUser(usr.get())).isTrue();
+        var usr= getUser();
+        usr.setName("testName");
+        assertThat(userService.updateUser(usr)).isTrue();
     }
 
     @Test
     void banById() {
-        var actualResultJPA = userJpaRepo.findById(USER_ID);
-        assertThat(actualResultJPA.isPresent()).isTrue();
-        User user = actualResultJPA.get();
-        user.setBanned(true);
-        assertThat(user.getBanned()).isTrue();
+        var usr = getUser();
+        usr.setBanned(true);
+        userService.updateUser(usr);
+        assertThat(getUser().getBanned()).isTrue();
     }
 
 //    @Test
@@ -60,4 +64,13 @@ class UserServiceImplTest {
 //        return new User(USER_ID, "testLogin", "testPasswd",
 //                "testName", "tetsSurname", "testPatron", false);
 //    }
+
+    private User getUser() {
+        var usr = userJpaRepo.findById(USER_ID);
+        assertThat(usr.isPresent()).isTrue();
+        return usr.get();
+    }
+    private User newUser() {
+        return new User(USER_ID,"test", "qwerty", "test", "Pushkin", "Sergeevich", false);
+    }
 }

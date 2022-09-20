@@ -7,6 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.TestConstructor;
 import ru.pavelluytov.testworkalpha.entity.User;
+import ru.pavelluytov.testworkalpha.factory.UserDTOFactory;
 import ru.pavelluytov.testworkalpha.factory.UserFactory;
 import ru.pavelluytov.testworkalpha.mappers.UserMapper;
 
@@ -28,16 +29,20 @@ class UserJDBCRepoTest {
 
     @Test
     void createUser() {
+        var usr = new User(USER_ID,"vfv", "sdg0", "testName", "sdg", "asf", false);
+        assertThat(jdbcRepo.createUser(usr)).isTrue();
     }
 
     @Test
     void findAllUsers() {
+        var usr = new UserDTOFactory().createDTO(new User(USER_ID, "ubersasha", "password"
+                , "Aleksandr", "Pushkin", "Sergeevich", false));
+        assertThat(jdbcRepo.findAllUsers().get(0)).isEqualTo(usr);
     }
 
     @Test
     void updateOneUser() {
         var usr = getUser();
-        assertThat(usr).isNotNull();
         String newName = "test";
         var updateUsr = new UserFactory().createUser(usr);
         updateUsr.setName(newName);
@@ -48,9 +53,9 @@ class UserJDBCRepoTest {
     @Test
     void banUserById() {
         var testUser = getUser();
-        assertThat(testUser).isNotNull();
         assertThat(testUser.getId()).isEqualTo(1);
         assertThat(jdbcRepo.banUserById(USER_ID)).isTrue();
+        assertThat(getUser().getBanned()).isTrue();
     }
 
     @Test
@@ -59,7 +64,9 @@ class UserJDBCRepoTest {
 
 
     private User getUser() {
-        return template.queryForObject(FIND_BY_ID, new Object[]{USER_ID}, new UserMapper());
+        var usr = template.queryForObject(FIND_BY_ID, new Object[]{USER_ID}, new UserMapper());
+        assertThat(usr).isNotNull();
+        return usr;
 
     }
 }

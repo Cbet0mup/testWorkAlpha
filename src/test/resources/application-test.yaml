@@ -5,7 +5,7 @@ spring:
     password: 123
     driver-class-name: org.h2.Driver
 
-  #sql:
+ # sql:
    # init:
     #  schema-locations: ./schema.sql
      # data-locations: ./data.sql
