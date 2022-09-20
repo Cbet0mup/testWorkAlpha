@@ -6,12 +6,14 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.TestConstructor;
+import ru.pavelluytov.testworkalpha.DTO.UsersDTO;
 import ru.pavelluytov.testworkalpha.entity.User;
 import ru.pavelluytov.testworkalpha.factory.UserDTOFactory;
 import ru.pavelluytov.testworkalpha.factory.UserFactory;
 import ru.pavelluytov.testworkalpha.mappers.UserMapper;
 
 import java.math.BigInteger;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -60,6 +62,10 @@ class UserJDBCRepoTest {
 
     @Test
     void findAllNoBannedUser() {
+        List<UsersDTO> users = jdbcRepo.findAllNoBannedUser();
+        users.forEach(x ->{
+            assertThat(x.getBanned()).isFalse();
+        });
     }
 
 

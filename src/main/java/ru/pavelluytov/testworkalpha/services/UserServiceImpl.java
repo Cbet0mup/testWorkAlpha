@@ -1,11 +1,11 @@
 package ru.pavelluytov.testworkalpha.services;
-import org.springframework.core.env.Environment;
+
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.pavelluytov.testworkalpha.DTO.UsersDTO;
-import ru.pavelluytov.testworkalpha.factory.UserDTOFactory;
 import ru.pavelluytov.testworkalpha.entity.User;
+import ru.pavelluytov.testworkalpha.factory.UserDTOFactory;
 import ru.pavelluytov.testworkalpha.repository.UserJDBCRepo;
 import ru.pavelluytov.testworkalpha.repository.UserJpaRepo;
 

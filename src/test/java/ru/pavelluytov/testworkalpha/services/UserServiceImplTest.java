@@ -4,13 +4,13 @@ import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestConstructor;
+import ru.pavelluytov.testworkalpha.DTO.UsersDTO;
 import ru.pavelluytov.testworkalpha.entity.User;
 import ru.pavelluytov.testworkalpha.factory.UserDTOFactory;
-import ru.pavelluytov.testworkalpha.repository.UserJDBCRepo;
 import ru.pavelluytov.testworkalpha.repository.UserJpaRepo;
 
 import java.math.BigInteger;
-import java.util.Collections;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -31,8 +31,7 @@ class UserServiceImplTest {
 
     @Test
     void getAllUsers() {
-        var usr = new UserDTOFactory().createDTO(new User(USER_ID, "ubersasha", "password"
-                , "Aleksandr", "Pushkin", "Sergeevich", false));
+        var usr = new UserDTOFactory().createDTO(getNewUser());
         assertThat(userService.getAllUsers().get(0)).isEqualTo(usr);
     }
 
@@ -57,13 +56,17 @@ class UserServiceImplTest {
         assertThat(getUser().getBanned()).isTrue();
     }
 
-//    @Test
-//    void findAllNoBanned() {
-//    }
-//    private User getNewUser() {
-//        return new User(USER_ID, "testLogin", "testPasswd",
-//                "testName", "tetsSurname", "testPatron", false);
-//    }
+    @Test
+    void findAllNoBanned() {
+        List<UsersDTO> users = userService.findAllNoBanned();
+        users.forEach(x ->{
+            assertThat(x.getBanned()).isFalse();
+        });
+    }
+    private User getNewUser() {
+        return new User(USER_ID, "ubersasha", "password"
+                , "Aleksandr", "Pushkin", "Sergeevich", false);
+    }
 
     private User getUser() {
         var usr = userJpaRepo.findById(USER_ID);
@@ -71,6 +74,7 @@ class UserServiceImplTest {
         return usr.get();
     }
     private User newUser() {
-        return new User(USER_ID,"test", "qwerty", "test", "Pushkin", "Sergeevich", false);
+        return new User(USER_ID, "tyutyu", "345345"
+                , "Aleksandr", "Pushkin", "Sergeevich", false);
     }
 }
