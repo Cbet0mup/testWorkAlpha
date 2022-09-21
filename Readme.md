@@ -10,3 +10,29 @@
 Запускаем docker-compose
  
 > docker-compose up -d
+ 
+### основные команды ###
+> получить список пользователей
+> http://localhost:8080/user/getusers/all
+> 
+> получить список незабаненных
+> http://localhost:8080/user/getusers/allnobanned
+> 
+> создать
+> http://localhost:8080/user/create
+>>{
+"id": 22,
+"login": "test",
+"password": "testpass",
+"name": "testName",
+"surname": "7gg",
+"patronymic": "ff",
+"banned": false
+}
+> 
+> Обновить данные
+> http://localhost:8080/user/update
+> засылается та же модель json
+> 
+> Забанить по id
+> http://localhost:8080/user/banuser?id=1
