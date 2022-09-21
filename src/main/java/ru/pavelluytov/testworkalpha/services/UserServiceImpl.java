@@ -1,5 +1,6 @@
 package ru.pavelluytov.testworkalpha.services;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -8,7 +9,6 @@ import ru.pavelluytov.testworkalpha.entity.User;
 import ru.pavelluytov.testworkalpha.factory.UserDTOFactory;
 import ru.pavelluytov.testworkalpha.repository.UserJDBCRepo;
 import ru.pavelluytov.testworkalpha.repository.UserJpaRepo;
-
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,11 +16,13 @@ import java.util.Objects;
 import java.util.Optional;
 
 @Service
+//@ConfigurationProperties(prefix = "port")
 public class UserServiceImpl implements UserServiceJPA{
     private final UserJpaRepo userJpaRepo;
     private final UserDTOFactory factory;
     private final UserJDBCRepo jdbcRepo;
-    private final String env = System.getProperty("SELECTED_REPO");
+    @Value("${SELECTED_REPO}")
+    private String env;
 
     public UserServiceImpl(UserJpaRepo userJpaRepo, UserDTOFactory factory, UserJDBCRepo jdbcRepo) {
         this.userJpaRepo = userJpaRepo;

@@ -41,7 +41,6 @@ public class UserJDBCRepo {
         String sql = "select * from users order by id";
         try {
             return jdbcTemplate.query(sql, new UserDTOMapper());
-
         }   catch (Exception e){
             e.printStackTrace();
             return new ArrayList<>();
