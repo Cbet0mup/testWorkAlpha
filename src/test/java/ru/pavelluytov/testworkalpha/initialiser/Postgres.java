@@ -7,6 +7,10 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 
+/**
+ * Код закомментирован из-за ошибки flay-way
+ * всплыла несовместимость миграций Н2 и postgres
+ */
 @UtilityClass
 public class Postgres {
 

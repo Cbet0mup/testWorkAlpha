@@ -8,6 +8,10 @@ import org.springframework.test.context.ContextConfiguration;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import ru.pavelluytov.testworkalpha.initialiser.Postgres;
 
+/**
+ * Код закомментирован из-за ошибки flay-way
+ * всплыла несовместимость миграций Н2 и postgres
+ */
 //@SpringBootTest
 //@ContextConfiguration(initializers = Postgres.Initializer.class)
 //@Testcontainers
