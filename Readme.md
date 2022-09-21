@@ -12,11 +12,11 @@
 > docker-compose up -d
  
 ### основные команды ###
-> получить список пользователей
+> получить список пользователей: по умолчаниюзапущено 2 контейнера с портами 8080 и 8090
 > http://localhost:8080/user/getusers/all
 > 
 > получить список незабаненных
-> http://localhost:8080/user/getusers/allnobanned
+> http://localhost:8090/user/getusers/allnobanned
 > 
 > создать
 > http://localhost:8080/user/create
