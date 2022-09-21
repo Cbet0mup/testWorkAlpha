@@ -8,14 +8,12 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.TestConstructor;
 import ru.pavelluytov.testworkalpha.DTO.UsersDTO;
 import ru.pavelluytov.testworkalpha.entity.User;
-import ru.pavelluytov.testworkalpha.factory.UserFactory;
 import ru.pavelluytov.testworkalpha.mappers.UserMapper;
 
 import java.math.BigInteger;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
 @RequiredArgsConstructor

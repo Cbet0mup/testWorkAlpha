@@ -7,7 +7,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestConstructor;
 import ru.pavelluytov.testworkalpha.DTO.UsersDTO;
 import ru.pavelluytov.testworkalpha.entity.User;
-import ru.pavelluytov.testworkalpha.factory.UserDTOFactory;
 import ru.pavelluytov.testworkalpha.repository.UserJpaRepo;
 
 import java.math.BigInteger;
