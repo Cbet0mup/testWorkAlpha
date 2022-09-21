@@ -25,8 +25,8 @@
 "login": "test",
 "password": "testpass",
 "name": "testName",
-"surname": "7gg",
-"patronymic": "ff",
+"surname": "testSurname",
+"patronymic": "testPatr",
 "banned": false
 }
 > 

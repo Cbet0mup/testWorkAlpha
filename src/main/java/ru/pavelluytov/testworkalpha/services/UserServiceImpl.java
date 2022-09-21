@@ -16,7 +16,6 @@ import java.util.Objects;
 import java.util.Optional;
 
 @Service
-//@ConfigurationProperties(prefix = "port")
 public class UserServiceImpl implements UserServiceJPA{
     private final UserJpaRepo userJpaRepo;
     private final UserDTOFactory factory;
